@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Ứng dụng mạng phức hợp trong phân tích cộng đồng và lan truyền thông tin trên YouTube
 
 1. Giới thiệu
@@ -151,3 +152,6 @@ Timeline lan truyền.
 Biểu đồ node bị ảnh hưởng và node mới kích hoạt.
 
 Đồ thị mạng trực quan.
+=======
+# complex-network-analysis
+>>>>>>> 21a2dd185c44371027c62d1faddee1e12bfb7573
