@@ -1,0 +1,16 @@
+{
+    "nodes": 1134890,
+    "edges": 2987624,
+    "degree_avg": 5.265045951590022,
+    "degree_max": 28754,
+    "degree_min": 1,
+    "clustering": 0.07711631787788092,
+    "avg_path": 5.209970104356826,
+    "diameter_est": 10,
+    "assortativity": -0.03690990839527629,
+    "avg_betweenness": 0.16630598560212886,
+    "avg_closeness": 0.19510827869917327,
+    "num_components": 1,
+    "largest_component": 1134890,
+    "smallest_component": 1134890
+}

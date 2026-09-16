@@ -1,0 +1,7 @@
+networkx
+matplotlib
+numpy
+cdlib
+leidenalg
+python-igraph
+flask

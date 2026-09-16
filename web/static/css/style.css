@@ -1,0 +1,149 @@
+/* ==========================================
+   1. GLOBAL STYLES & LIGHT THEME
+   ========================================== */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: linear-gradient(135deg, #f0f9ff, #ffffff);
+    color: #334155;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #0f172a;
+}
+
+/* ==========================================
+   2. TAB NAVIGATION STYLING
+   ========================================== */
+.nav-tabs {
+    border-bottom: none;
+}
+
+.nav-tabs .nav-link {
+    color: #64748b;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.nav-tabs .nav-link:hover {
+    color: #2563eb;
+    background-color: #f1f5f9;
+}
+
+.nav-tabs .nav-link.active {
+    color: #2563eb !important;
+    background-color: #eff6ff !important;
+    border: 1px solid #bfdbfe !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================
+   3. KPI CARDS (Tab 1: Mạng phức hợp)
+   ========================================== */
+.kpi-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    background-color: #ffffff;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025) !important;
+}
+
+/* ==========================================
+   4. FORM CONTROLS & BUTTONS
+   ========================================== */
+.form-label {
+    font-size: 0.875rem;
+}
+
+.form-control, .form-select {
+    border-color: #cbd5e1;
+    border-radius: 8px;
+    padding: 0.5rem 0.75rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.15);
+}
+
+.btn {
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+}
+
+/* ==========================================
+   5. SUMMARY BOX (Đồng bộ IC & LT)
+   ========================================== */
+.summary-box {
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.875rem;
+    color: #334155;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    white-space: pre-wrap;
+}
+
+/* ==========================================
+   6. LOGS / PRE FORMATTING
+   ========================================== */
+pre {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    max-height: 180px;
+    overflow-y: auto;
+    font-size: 0.875rem;
+    color: #334155;
+    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Custom Scrollbar cho ô Kết quả */
+pre::-webkit-scrollbar {
+    width: 6px;
+}
+pre::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+pre::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+
+/* ==========================================
+   7. CHARTS & NETWORK GRAPH CONTAINERS
+   ========================================== */
+canvas {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 280px;
+    background: #ffffff;
+}
+
+#realNetwork, #lt-network {
+    width: 100%;
+    min-height: 400px;
+    max-height: 700px;
+    border: 1px dashed #cbd5e1;
+    background-color: #ffffff;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    padding: 10px;
+}
+
+
+#realNetwork img, #lt-network img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

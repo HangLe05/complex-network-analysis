@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân tích mạng phức hợp & cộng đồng</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <style>
+        .chart-box-lg {
+            min-height: 380px;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <header class="bg-white shadow-sm py-3 mb-4 border-bottom">
+        <div class="container">
+            <h1 class="h3 font-weight-bold text-dark m-0">Ứng dụng mạng phức hợp trong phân tích cộng đồng và lan truyền thông tin</h1>
+        </div>
+    </header>
+
+    <main class="container mb-5">
+        <ul class="nav nav-tabs nav-fill shadow-sm rounded bg-white p-1 mb-4" id="mainTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active fw-semibold" id="network-tab" data-bs-toggle="tab" data-bs-target="#network" type="button" role="tab">
+                    <i class="bi bi-diagram-3 me-1"></i> Mạng phức hợp
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link fw-semibold" id="communities-tab" data-bs-toggle="tab" data-bs-target="#communities" type="button" role="tab">
+                    <i class="bi bi-people me-1"></i> Cộng đồng Leiden
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link fw-semibold" id="ic-tab" data-bs-toggle="tab" data-bs-target="#ic" type="button" role="tab">
+                    <i class="bi bi-share me-1"></i> Lan truyền IC
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link fw-semibold" id="lt-tab" data-bs-toggle="tab" data-bs-target="#lt" type="button" role="tab">
+                    <i class="bi bi-sliders me-1"></i> Lan truyền LT
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="mainTabContent">
+
+            <!-- ================= TAB 1: MẠNG PHỨC HỢP ================= -->
+            <div class="tab-pane fade show active" id="network" role="tabpanel">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="h5 card-title mb-1 text-primary">Phân tích đặc trưng mạng</h3>
+                            <p class="text-muted small mb-0">Bấm nút để tính toán các thông số chỉ số mạng phức hợp</p>
+                        </div>
+                        <button id="analyze-network-btn" class="btn btn-primary px-4 fw-medium">
+                            <i class="bi bi-play-fill me-1"></i> Phân tích mạng
+                        </button>
+                    </div>
+                </div>
+
+                <div id="network-placeholder" class="card shadow-sm border-0 p-5 text-center text-muted">
+                    <i class="bi bi-cpu display-4 mb-2"></i>
+                    <p class="mb-0">Chưa phân tích. Vui lòng bấm nút "Phân tích mạng" phía trên.</p>
+                </div>
+
+                <div id="network-results" style="display:none;">
+                    <h4 class="h5 mb-3 text-secondary">Kết quả phân tích chỉ số mạng</h4>
+                    <div class="row g-3">
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Số node</div>
+                                    <div class="fs-4 fw-bold text-dark" id="nodes">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Số cạnh</div>
+                                    <div class="fs-4 fw-bold text-dark" id="edges">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Degree trung bình</div>
+                                    <div class="fs-4 fw-bold text-dark" id="degree_avg">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Degree max</div>
+                                    <div class="fs-4 fw-bold text-dark" id="degree_max">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Degree min</div>
+                                    <div class="fs-4 fw-bold text-dark" id="degree_min">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Clustering</div>
+                                    <div class="fs-4 fw-bold text-dark" id="clustering">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Đường đi trung bình</div>
+                                    <div class="fs-4 fw-bold text-dark" id="avg_path">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Đường kính ước lượng</div>
+                                    <div class="fs-4 fw-bold text-dark" id="diameter_est">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Assortativity</div>
+                                    <div class="fs-4 fw-bold text-dark" id="assortativity">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Betweenness TB</div>
+                                    <div class="fs-4 fw-bold text-dark" id="avg_betweenness">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Closeness TB</div>
+                                    <div class="fs-4 fw-bold text-dark" id="avg_closeness">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Số thành phần liên thông</div>
+                                    <div class="fs-4 fw-bold text-dark" id="num_components">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Thành phần lớn nhất</div>
+                                    <div class="fs-4 fw-bold text-dark" id="largest_component">-</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-4 col-lg-3">
+                            <div class="card h-100 border-0 shadow-sm kpi-card">
+                                <div class="card-body">
+                                    <div class="text-muted small">Thành phần nhỏ nhất</div>
+                                    <div class="fs-4 fw-bold text-dark" id="smallest_component">-</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 2: CỘNG ĐỒNG LEIDEN ================= -->
+            <div class="tab-pane fade" id="communities" role="tabpanel">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body d-flex justify-content-between align-items-center">
+                        <div>
+                            <h3 class="h5 card-title mb-1 text-success">Phân tích cộng đồng (Leiden)</h3>
+                            <p class="text-muted small mb-0">Phát hiện và thống kê các cụm cộng đồng trong mạng</p>
+                        </div>
+                        <button id="analyze-communities-btn" class="btn btn-success px-4 fw-medium">
+                            <i class="bi bi-diagram-2 me-1"></i> Phân tích cộng đồng
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title h6 text-secondary mb-3">Tóm tắt phân tích cộng đồng</h5>
+                        <div id="communities-result" class="p-3 bg-light rounded text-dark">
+                            Chưa phân tích.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title h6 text-secondary mb-3">Biểu đồ phân bố kích thước cộng đồng</h5>
+                        <div class="chart-container" style="position: relative; width:100%; height: 350px;">
+                            <canvas id="commChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 3: LAN TRUYỀN IC ================= -->
+            <div class="tab-pane fade" id="ic" role="tabpanel">
+                <!-- Khối điều khiển (Chọn cộng đồng & p) -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3 text-danger">Mô phỏng Lan truyền IC (Independent Cascade)</h3>
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-5">
+                                <label class="form-label fw-medium text-secondary">Chọn cộng đồng:</label>
+                                <select id="ic-community-select" class="form-select">
+                                    {% for i in range(comm_sizes|length) %}
+                                        <option value="{{ i }}">Cộng đồng {{ i }} ({{ comm_sizes[i] }} node)</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-medium text-secondary">Xác suất lan truyền p:</label>
+                                <input type="text" id="ic-p-input" class="form-control" value="0.1">
+                            </div>
+                            <div class="col-md-3">
+                                <button id="btn-run-ic" class="btn btn-danger w-100 fw-bold">
+                                    <i class="bi bi-play-circle me-1"></i> Chạy IC
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tóm tắt kết quả -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h6 class="card-title text-secondary fw-semibold mb-2">Tóm tắt kết quả</h6>
+                        <div id="ic-summary-info" class="summary-box">Chưa có dữ liệu mô phỏng.</div>
+                    </div>
+                </div>
+
+                <!-- HÀNG 1: 2 Biểu đồ -->
+                <div class="row g-4 mb-4">
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-secondary fw-semibold mb-3">Tổng số node bị ảnh hưởng</h6>
+                                <div style="position: relative; height: 300px;">
+                                    <canvas id="icCumulativeChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body">
+                                <h6 class="card-title text-secondary fw-semibold mb-3">Node mới kích hoạt</h6>
+                                <div style="position: relative; height: 300px;">
+                                    <canvas id="icNewChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Đồ thị mạng -->
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body text-center p-4">
+                                <h6 class="card-title text-secondary fw-semibold mb-3 text-start">Đồ thị mạng</h6>
+                                <div id="realNetwork" class="network-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================= TAB 4: LAN TRUYỀN LT ================= -->
+            <div class="tab-pane fade" id="lt" role="tabpanel">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h3 class="h5 card-title mb-3 text-warning text-dark">Mô phỏng Lan truyền LT (Linear Threshold)</h3>
+                        <div class="row g-3 align-items-end">
+                            <div class="col-md-5">
+                                <label class="form-label fw-medium text-secondary">Chọn cộng đồng:</label>
+                                <select id="lt-community-select" class="form-select">
+                                    {% for i in range(comm_sizes|length) %}
+                                        <option value="{{ i }}">Cộng đồng {{ i }} ({{ comm_sizes[i] }} node)</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-medium text-secondary">Threshold (Ngưỡng):</label>
+                                <input id="lt-threshold" type="text" value="0.5" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <button id="lt-run-btn" class="btn btn-warning text-dark w-100 fw-medium">
+                                    <i class="bi bi-play-circle me-1"></i> Chạy LT
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tóm tắt kết quả -->
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title h6 text-secondary mb-2">Tóm tắt kết quả</h5>
+                        <div id="lt-result-text" class="summary-box">Chưa chạy mô phỏng.</div>
+                    </div>
+                </div>
+
+                <!-- Biểu đồ -->
+                <div class="row g-4">
+                    <div class="col-12 col-xl-6">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="card-title text-secondary fw-semibold mb-3">Tổng số node bị ảnh hưởng</h6>
+                                <div class="chart-container chart-box-lg flex-grow-1">
+                                    <canvas id="ltlineChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-6">
+                        <div class="card shadow-sm border-0 h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h6 class="card-title text-secondary fw-semibold mb-3">Node mới kích hoạt</h6>
+                                <div class="chart-container chart-box-lg flex-grow-1">
+                                    <canvas id="ltbarChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card shadow-sm border-0">
+                            <div class="card-body">
+                                <h6 class="card-title text-secondary fw-semibold mb-3">Đồ thị mạng</h6>
+                                <div id="lt-network" class="network-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </main>
+
+    <!-- Thư viện JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
