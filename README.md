@@ -4,7 +4,7 @@
 1. Giới thiệu
 Đề tài xây dựng hệ thống phân tích mạng phức hợp trên dữ liệu YouTube, tập trung vào:
 - Phân tích đặc trưng mạng.  
-- Phát hiện cộng đồng bằng **HIT-Leiden**.  
+- Phát hiện cộng đồng bằng **Leiden**.  
 - Mô phỏng lan truyền thông tin với mô hình **Independent Cascade (IC)** và **Linear Threshold (LT)**.  
 
 Ứng dụng được xây dựng dưới dạng web với **Flask**, kết hợp **Python** và **HTML/CSS/JavaScript**.
@@ -14,7 +14,7 @@
 ## 2. Mục tiêu
 - Xây dựng và phân tích mạng phức hợp từ dữ liệu YouTube.  
 - Tính toán các đặc trưng: số nút, số cạnh, Degree, Clustering Coefficient, Average Shortest Path Length, Diameter, Assortativity, Centrality.  
-- Phát hiện và phân tích cấu trúc cộng đồng bằng **HIT-Leiden**.  
+- Phát hiện và phân tích cấu trúc cộng đồng bằng **Leiden**.  
 - Mô phỏng lan truyền thông tin bằng IC và LT.  
 - Trực quan hóa kết quả trên giao diện web.
 
@@ -32,7 +32,7 @@
 
 ## 4. Chức năng hệ thống
 - **Phân tích mạng**: `GET /analyze-network` → trả về thống kê đặc trưng mạng.  
-- **Phân tích cộng đồng**: `GET /analyze-communities` → chạy HIT-Leiden, trả về số lượng cộng đồng, kích thước, modularity.  
+- **Phân tích cộng đồng**: `GET /analyze-communities` → chạy Leiden, trả về số lượng cộng đồng, kích thước, modularity.  
 - **Mô phỏng IC**: `POST /run-ic` với đầu vào `{ "community_index": 0, "p": 0.1 }`.  
 - **Mô phỏng LT**: `POST /run-lt` với đầu vào `{ "community_index": 0, "threshold": 0.5 }`.
 
@@ -40,7 +40,7 @@
 
 ## 5. Giao diện
 - **Mạng phức hợp**: hiển thị đặc trưng mạng.  
-- **Cộng đồng HIT-Leiden**: hiển thị thông tin cộng đồng.  
+- **Cộng đồng Leiden**: hiển thị thông tin cộng đồng.  
 - **Lan truyền IC**: nhập *p*, chạy mô phỏng, xem biểu đồ.  
 - **Lan truyền LT**: nhập *Threshold*, chạy mô phỏng, xem biểu đồ.  
 - Kết quả gồm biểu đồ số node bị ảnh hưởng, node mới kích hoạt và hình ảnh mạng.
